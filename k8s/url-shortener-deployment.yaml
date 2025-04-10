@@ -14,14 +14,22 @@ spec:
     spec:
       containers:
         - name: url-shortener
-          image: url-shortener:latest  # 📝 Use the locally built Minikube image
+          image: url-shortener:latest
+          imagePullPolicy: Never
           ports:
             - containerPort: 5000
           env:
             - name: REDIS_HOST
               value: "redis"
+            - name: REDIS_PORT
+              value: "6379"    
             - name: BASE_URL
               value: "http://127.0.0.1:5000"
+          resources:
+            requests:
+              cpu: 100m
+            limits:
+              cpu: 250m
 ---
 apiVersion: v1
 kind: Service
