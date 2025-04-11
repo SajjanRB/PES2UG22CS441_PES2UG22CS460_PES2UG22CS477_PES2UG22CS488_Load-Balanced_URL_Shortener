@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ab-stress-test
+spec:
+  template:
+    spec:
+      containers:
+      - name: apache-bench
+        image: httpd:2.4
+        command: [ "ab" ]
+        args: [ "-n", "5000", "-c", "100", "http://url-shortener-service:5000/" ]
+      restartPolicy: Never
+  backoffLimit: 2
