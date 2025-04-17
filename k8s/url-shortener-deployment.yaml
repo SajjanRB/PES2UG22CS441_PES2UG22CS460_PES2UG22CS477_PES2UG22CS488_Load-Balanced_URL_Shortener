@@ -20,11 +20,25 @@ spec:
             - containerPort: 5000
           env:
             - name: REDIS_HOST
-              value: "redis"
+              valueFrom:
+                configMapKeyRef:
+                  name: url-shortener-config
+                  key: REDIS_HOST
             - name: REDIS_PORT
-              value: "6379"    
+              valueFrom:
+                configMapKeyRef:
+                  name: url-shortener-config
+                  key: REDIS_PORT
             - name: BASE_URL
-              value: "http://127.0.0.1:5000"
+              valueFrom:
+                configMapKeyRef:
+                  name: url-shortener-config
+                  key: BASE_URL
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: url-shortener-secret
+                  key: SECRET_KEY
           resources:
             requests:
               cpu: 100m
@@ -42,4 +56,3 @@ spec:
   ports:
     - port: 5000
       targetPort: 5000
-
